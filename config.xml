@@ -8,7 +8,7 @@
         Apache Cordova Team
     </author>
 	<preference name="Orientation" value="landscape" />
-	 <gap:plugin name="org.apache.cordova.device-orientation" />
+	 
     <content src="index.html" />
     <access origin="*" />
 	<feature name="Camera">

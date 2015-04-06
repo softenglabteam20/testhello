@@ -42,7 +42,7 @@
 			clicked.play();
 			var getval = localStorage.getItem('urlval');
 			if (getval != "true"){ // if there is no save, start game 
-				setTimeout( function() {window.location.href='character sheet.html';}, 300);
+				setTimeout( function() {window.location.href='character_sheet.html';}, 300);
 			}
 		}
 		function reset(){
@@ -60,7 +60,7 @@
 			localStorage.removeItem('first2');
 			localStorage.removeItem('diary6');
 			localStorage.removeItem('diary7');
-			window.location.href='character sheet.html';
+			window.location.href='character_sheet.html';
 		}
 		function mute(){
 			var s1 = document.getElementById('rain1');

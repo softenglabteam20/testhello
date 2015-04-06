@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Diary</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/diary7.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" src="scripts/mute.js"></script>
+	<script type="text/javascript">
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		}
+		function next(){
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+			setTimeout( function(){window.location.href="epilogue2.html";}, 300);
+		}
+		function sound(){
+			var coughing = document.getElementById('cough');
+			coughing.play();
+		}
+		function delay(){
+			setTimeout("sound()", 6800);
+		}
+		function sound2(){
+			var falling = document.getElementById('fall');
+			falling.play();
+		}
+		function delay2(){
+			setTimeout("sound2()", 12800);
+		}
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		myVar = setTimeout(function(){window.location.href='diary7.html#openModalDelay'}, 300000);
+			$(document).ready(function(){
+			$(document).mousemove(function(event){
+			clearTimeout(myVar);
+		myVar = setTimeout(function(){window.location.href='diary7.html#openModalDelay'}, 300000);
+			});
+		}); 
+	</script>
+</head>
+<body onload="checkMute(); delay(); delay2(); nobackforw(); appear();" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+	<audio id="diary" hidden = "hidden" preload autoplay>
+		<source src = "sounds/diary.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/diary.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<audio id="clickme" hidden = "hidden" preload>
+		<source src = "sounds/click.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/click.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<audio id="cough" hidden = "hidden" preload>
+		<source src = "sounds/cough.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/cough.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<audio id="fall" hidden = "hidden" preload>
+		<source src = "sounds/fall.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/fall.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<br/>
+	<h4> New Orleans, November 25<sup>th</sup> 1951</h4>
+	<br/>
+	<p>
+		What the fuck just happened. How was that even possible. I was...
+	</p>
+	<div class="fade-in one">
+		<img src="images/blood1.png" id="bl1" class="blood1"/>
+	</div>
+	<div class="fade-in two">
+		<img src="images/blood2.png" id="bl2" class="blood2"/>
+		<a id="next" class="links" type="button" onclick="next()"><img src="images/next.png" class="imagenext"/></a>
+	</div>
+	<script type="text/javascript">
+		document.getElementById('next').style.visibility="hidden";
+		function visible(){
+			document.getElementById('next').style.visibility="visible";
+		}
+		function appear(){
+			setTimeout("visible()", 14000);
+		}
+	</script>
+	<div id="openModalDelay" class="modalDialog">
+		<div>
+			<a onclick="location.href='#closeDelay'" title="" class="close">x</a>
+			<p>
+				<center>
+				The clock is ticking. Hurry up!
+				</center>
+			</p>
+		</div>
+	</div>
+<script type="text/javascript" src="platforms\android\platform_www\cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

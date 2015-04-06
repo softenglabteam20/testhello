@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Diary</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/diary.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" src="scripts/mute.js"></script>
+	<script type="text/javascript">
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		}
+	</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		myVar = setTimeout(function(){window.location.href='diary2.html#openModalDelay'}, 300000);
+			$(document).ready(function(){
+			$(document).mousemove(function(event){
+			clearTimeout(myVar);
+		myVar = setTimeout(function(){window.location.href='diary2.html#openModalDelay'}, 300000);
+			});
+		}); 
+	</script>
+</head>
+<body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+	<audio id="diary" hidden = "hidden" preload autoplay>
+		<source src = "sounds/diary.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/diary.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<audio id="clickme" hidden = "hidden" preload>
+		<source src = "sounds/click.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/click.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<br/>
+	<h4> New Orleans, November 16<sup>th</sup> 1951</h4>
+	<br/>
+	<p>
+		I am like a stray dog chasing car wheels. I just do it and don't know what I am expecting in return, probably nothing.</br></br>
+		The two clothing industries in town had nothing more to add to the case, so the lead infos are close to zero. There is something I miss in the whole
+		picture or something is kept hidden from me, but I can't work like this.</br></br>
+		It's like someone is playing with me. Fuck, it's getting on my nerves.</br></br>
+		Anyway, I ought it to myself to try harder, a case is a case and I need those money but first Barrow needs to answer a few questions. Tomorrow night
+		I'll go to that creepy silent mansion.</br></br>
+		<script type="text/javascript">
+			function next(){
+				var mafia = localStorage.getItem("mafiaFiles");
+				if (mafia == 1){
+					var clicked = document.getElementById('clickme');
+					clicked.play();
+					setTimeout( function(){window.location.href='louise.html';}, 300);
+				}
+				else{
+					var clicked = document.getElementById('clickme');
+					clicked.play();
+					setTimeout( function(){window.location.href='footchase.html'}, 300);
+				}
+			}
+		</script>
+	<a class="links" type="button" onclick="next()"><img src="images/next.png" class="imagenext"/></a>
+	</p>
+	<div id="openModalDelay" class="modalDialog">
+		<div>
+			<a onclick="location.href='#closeDelay'" title="" class="close">x</a>
+			<p>
+				<center>
+				The clock is ticking. Hurry up!
+				</center>
+			</p>
+		</div>
+	</div>
+<script type="text/javascript" src="platforms\android\platform_www\cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>

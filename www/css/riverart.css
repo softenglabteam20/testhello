@@ -1,0 +1,226 @@
+html { 
+	font-size:100%;	/*best for responsive*/
+	background: url('river.jpg');
+	background-position: 50% 50%; /*responsive background*/
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	-webkit-user-select: none; /*unselectable*/      
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+	overflow: hidden; /* hiding horizontal scroll bar */
+}
+@font-face{ /*enter own txt-font*/
+	font-family: "Gill Sans Hel";
+	src: url('Gill Sans Hel.otf');
+}
+.links{ 
+	cursor: pointer;
+}
+.imagenext{
+	width: 9%;
+	position:absolute;
+	left: 91%;
+	bottom: 1%;
+}
+#clouds{
+	padding: 100px 0;
+}
+.cloud {
+	content:url(fog.png);
+	/*width: 200px; height: 60px;
+	background: #fff;
+	
+	border-radius: 200px;
+	-moz-border-radius: 200px;
+	-webkit-border-radius: 200px;*/
+	
+	position: relative; 
+}
+.cloud:before, .cloud:after {
+	content: '';
+	position: absolute; 
+	background: #fff;
+	width: 00px; height: 80px;
+	position: absolute; top: -15px; left: 10px;
+	
+	border-radius: 100px;
+	-moz-border-radius: 100px;
+	-webkit-border-radius: 100px;
+	
+	-webkit-transform: rotate(30deg);
+	transform: rotate(30deg);
+	-moz-transform: rotate(30deg);
+}
+
+.cloud:after {
+	width: 120px; height: 120px;
+	top: -55px; left: auto; right: 15px;
+}
+.x1 { /* to deutero panw aristera */
+	-webkit-transform: scale(1.9);
+	-moz-transform: scale(1.9);
+	transform: scale(1.9);
+	opacity: 1.9;
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+
+/*variable speed, opacity, and position of clouds for realistic effect*/
+.x2 { /* to megalo kentriko */
+	left: 200px;
+	
+	-webkit-transform: scale(2.9);
+	-moz-transform: scale(2.9);
+	transform: scale(2.9);
+	opacity: 2.9; /*opacity proportional to the size*/
+	
+	/*Speed will also be proportional to the size and opacity*/
+	/*More the speed. Less the time in 's' = seconds*/
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+.x3 { /* to prwto katw aristera*/
+	left: -250px; top: -200px;
+	
+	-webkit-transform: scale(1.6);
+	-moz-transform: scale(1.6);
+	transform: scale(1.6);
+	opacity: 1.6; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+.x4 { /* meta to megalo kentriko katw tou deksia */
+	left: 470px; top: -250px;
+	
+	-webkit-transform: scale(1.9);
+	-moz-transform: scale(1.9);
+	transform: scale(1.9);
+	opacity: 1.9; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+.x5 { /* amesws epomeno 2o kentriko megalo */
+	left: 900px; top: -800px;
+	
+	-webkit-transform: scale(2.8);
+	-moz-transform: scale(2.8);
+	transform: scale(2.8);
+	opacity: 2.8; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+.x6 {
+	left: 1200px; top: -600px;
+	
+	-webkit-transform: scale(2.5);
+	-moz-transform: scale(2.5);
+	transform: scale(2.5);
+	opacity: 2.5; /*opacity proportional to the size*/
+	
+	-webkit-animation: moveclouds 20s linear infinite;
+	-moz-animation: moveclouds 20s linear infinite;
+	-o-animation: moveclouds 20s linear infinite;
+}
+.x7 {
+	left: auto; right: 0%; top: -850px;
+	
+	-webkit-transform: scale(3.9);
+	-moz-transform: scale(3.9);
+	transform: scale(3.9);
+	opacity: 3.9;
+	
+	-webkit-animation: moveclouds 11s linear infinite;
+	-moz-animation: moveclouds 11s linear infinite;
+	-o-animation: moveclouds 11s linear infinite;
+}
+.x8 {
+	left: 100px; bottom: 550px;
+	
+	-webkit-transform: scale(3.9);
+	-moz-transform: scale(3.9);
+	transform: scale(3.9);
+	opacity: 3.9;
+	
+	-webkit-animation: moveclouds 5s linear infinite;
+	-moz-animation: moveclouds 5s linear infinite;
+	-o-animation: moveclouds 5s linear infinite;
+}
+@-webkit-keyframes moveclouds {
+	0% {margin-left: 1980px;}
+	100% {margin-left: -1980px;}
+}
+@-moz-keyframes moveclouds {
+	0% {margin-left: 1980px;}
+	100% {margin-left: -1980px;}
+}
+@-o-keyframes moveclouds {
+	0% {margin-left: 1980px;}
+	100% {margin-left: -1980px;}
+}
+.modalDialog { /*creation of modal box*/
+	position: fixed;
+	font-family: "Gill Sans Hel";
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	text-align:justify;
+	text-justify: inter-word;
+	overflow: auto; /* for use of scrollbar */
+}
+.modalDialog:target { /*creation of pseudo-class*/
+	opacity:1;
+	pointer-events: auto;
+}
+.modalDialog > div { /*style the div inside modal box*/
+	cursor:default;
+	width: 50%;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #999);
+	background: -webkit-linear-gradient(#fff, #999);
+	background: -o-linear-gradient(#fff, #999);
+	z-index:200;
+}
+.close { /*style close button*/
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+.close:hover { 
+	background: red; 
+	cursor:pointer;
+}

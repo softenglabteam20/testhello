@@ -1,0 +1,564 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Character Sheet</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/character sheet.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript">
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		}
+	    // count total points of attributes and skills and save on local storage 
+		function phys(ph, ph1, ph2, ph3, ph4){
+		var ph = 0;
+		var ph1 = document.getElementById('Physical1').checked;
+			if (ph1 == true){
+				ph++;						
+			} 
+		var ph2 = document.getElementById('Physical2').checked;
+			if (ph2 == true){
+				ph++;								
+			} 
+		var ph3 = document.getElementById('Physical3').checked;
+			if (ph3 == true){
+				ph++;
+			} 
+		var ph4 = document.getElementById('Physical4').checked;
+			if (ph4 == true){
+				ph++;
+			} 
+		localStorage.setItem("physical",ph);
+		}
+		function menta(mn, mn1, mn2, mn3, mn4){
+		var mn = 0;
+		var mn1 = document.getElementById('Mental1').checked;
+			if (mn1 == true){
+				mn++;						
+			} 
+		var mn2 = document.getElementById('Mental2').checked;
+			if (mn2 == true){
+				mn++;								
+			} 
+		var mn3 = document.getElementById('Mental3').checked;
+			if (mn3 == true){
+				mn++;
+			} 
+		var mn4 = document.getElementById('Mental4').checked;
+			if (mn4 == true){
+				mn++;
+			} 
+		localStorage.setItem("mental",mn);
+		}
+		function soc(sc, sc1, sc2, sc3, sc4){
+		var sc = 0;
+		var sc1 = document.getElementById('Social1').checked;
+			if (sc1 == true){
+				sc++;						
+			} 
+		var sc2 = document.getElementById('Social2').checked;
+			if (sc2 == true){
+				sc++;								
+			} 
+		var sc3 = document.getElementById('Social3').checked;
+			if (sc3 == true){
+				sc++;
+			} 
+		var sc4 = document.getElementById('Social4').checked;
+			if (sc4 == true){
+				sc++;
+			} 
+		localStorage.setItem("social",sc);
+		}
+		function lock(lp, lp1){
+		var lp = 0;
+		var lp1 = document.getElementById('Lockpicking').checked;
+			if(lp1 == true){
+				lp++;
+			}
+		localStorage.setItem("lockpicking",lp);
+		}
+		function stlth(sth, sth1){
+		var sth = 0;
+		var sth1 = document.getElementById('Stealth').checked;
+			if(sth1 == true){
+				sth++;
+			}
+		localStorage.setItem("stealth",sth);
+		}
+		function pist(pl, pl1){
+		var pl = 0;
+		var pl1 = document.getElementById('Pistol').checked;
+			if(pl1 == true){
+				pl++;
+			}
+		localStorage.setItem("pistol",pl);
+		}
+		function run(rn, rn1){
+		var rn = 0;
+		var rn1 = document.getElementById('Running').checked;
+			if(rn1 == true){
+				rn++;
+			}
+		localStorage.setItem("running",rn);
+		}
+		function invest(inv, inv1){
+		var inv = 0;
+		var inv1 = document.getElementById('Investigation').checked;
+			if(inv1 == true){
+				inv++;
+			}
+		localStorage.setItem("investigation",inv);
+		}
+		function secl(sl, sl1){
+		var sl = 0;
+		var sl1 = document.getElementById('Second Language').checked;
+			if(sl1 == true){
+				sl++;
+			}
+		localStorage.setItem("second language",sl);
+		}
+		function pers(prs,prs1){
+		var prs = 0;
+		var prs1 = document.getElementById('Persuasion').checked;
+			if(prs1 == true){
+				prs++;
+			}
+		localStorage.setItem("persuasion",prs);
+		}
+		function lie(ls,ls1){
+		var ls = 0;
+		var ls1 = document.getElementById('Lies').checked;
+			if(ls1 == true){
+				ls++;
+			}
+		localStorage.setItem("lies",ls);
+		}
+		function intim(intm,intm1){
+		var intm = 0;
+		var intm1 = document.getElementById('Intimidation').checked;
+			if(intm1 == true){
+				intm++; 
+			}
+		localStorage.setItem("intimidation",intm);
+		}
+		function check(che,che2,che3,che4){ // restrictions of order of points 
+		var che = document.getElementById('Physical1').checked;
+		var che2 = document.getElementById('Physical2').checked;
+		var che3 = document.getElementById('Physical3').checked;
+		var che4 = document.getElementById('Physical4').checked;
+			if (che==true){
+				document.getElementById('Physical2').disabled=false;	
+			} 
+			if (che==false){
+				document.getElementById('Physical2').disabled=true;
+			}
+			if (che==false && che2==true){
+				document.getElementById('Physical2').checked=false;
+			}
+			if (che2==true){
+				document.getElementById('Physical3').disabled=false;	
+			} 
+			if (che2==false){
+				document.getElementById('Physical3').disabled=true;
+			}
+			if (che==false || che2==false && che3==true){
+				document.getElementById('Physical3').checked=false;
+			}
+			if (che3==true){
+				document.getElementById('Physical4').disabled=false;	
+			} 
+			if (che3==false){
+				document.getElementById('Physical4').disabled=true;
+			}
+			if (che==false || che2==false || che3==false && che4==true){
+				document.getElementById('Physical4').checked=false;
+			}
+		}
+		function check2(che,che2,che3,che4){ 
+		var che = document.getElementById('Mental1').checked;
+		var che2 = document.getElementById('Mental2').checked;
+		var che3 = document.getElementById('Mental3').checked;
+		var che4 = document.getElementById('Mental4').checked;
+			if (che==true){
+				document.getElementById('Mental2').disabled=false;	
+			} 
+			if (che==false){
+				document.getElementById('Mental2').disabled=true;
+			}
+			if (che==false && che2==true){
+				document.getElementById('Mental2').checked=false;
+			}
+			if (che2==true){
+				document.getElementById('Mental3').disabled=false;	
+			} 
+			if (che2==false){
+				document.getElementById('Mental3').disabled=true;
+			}
+			if (che==false || che2==false && che3==true){
+				document.getElementById('Mental3').checked=false;
+			}
+			if (che3==true){
+				document.getElementById('Mental4').disabled=false;	
+			} 
+			if (che3==false){
+				document.getElementById('Mental4').disabled=true;
+			}
+			if (che==false || che2==false || che3==false && che4==true){
+				document.getElementById('Mental4').checked=false;
+				}
+		}
+		function check3(che,che2,che3,che4){ 
+		var che = document.getElementById('Social1').checked;
+		var che2 = document.getElementById('Social2').checked;
+		var che3 = document.getElementById('Social3').checked;
+		var che4 = document.getElementById('Social4').checked;
+			if (che==true){
+				document.getElementById('Social2').disabled=false;	
+			} 
+			if (che==false){
+				document.getElementById('Social2').disabled=true;
+			}
+			if (che==false && che2==true){
+				document.getElementById('Social2').checked=false;
+			}
+			if (che2==true){
+				document.getElementById('Social3').disabled=false;	
+			} 
+			if (che2==false){
+				document.getElementById('Social3').disabled=true;
+			}
+			if (che==false || che2==false && che3==true){
+				document.getElementById('Social3').checked=false;
+			}
+			if (che3==true){
+				document.getElementById('Social4').disabled=false;	
+			} 
+			if (che3==false){
+				document.getElementById('Social4').disabled=true;
+			}
+			if (che==false || che2==false || che3==false && che4==true){
+				document.getElementById('Social4').checked=false;
+			}
+		}
+		function limitat(i){ // restriction for total attribute points 
+		var count = 0;
+			for (var i=0; i<document.getElementsByName('attribute').length; i++){
+				if (document.getElementsByName('attribute')[i].checked){
+					count = count + 1;
+				}	
+				if (count > 6){
+					document.getElementById('Physical1').disabled=true;
+					document.getElementById('Physical2').disabled=true;
+					document.getElementById('Physical3').disabled=true;
+					document.getElementById('Physical4').disabled=true;
+					document.getElementById('Mental1').disabled=true;
+					document.getElementById('Mental2').disabled=true;
+					document.getElementById('Mental3').disabled=true;
+					document.getElementById('Mental4').disabled=true;
+					document.getElementById('Social1').disabled=true;
+					document.getElementById('Social2').disabled=true;
+					document.getElementById('Social3').disabled=true;
+					document.getElementById('Social4').disabled=true;
+				}
+			}
+		}
+		function limitsk(i){ // restriction for total skill points 
+		var count = 0;
+			for (var i=0; i<document.getElementsByName('skill').length; i++){
+				if (document.getElementsByName('skill')[i].checked){
+					count = count + 1;
+				}
+				if (count > 3){
+					document.getElementById('Lockpicking').disabled=true;
+					document.getElementById('Stealth').disabled=true;
+					document.getElementById('Pistol').disabled=true;
+					document.getElementById('Running').disabled=true;
+					document.getElementById('Investigation').disabled=true;
+					document.getElementById('Second Language').disabled=true;
+					document.getElementById('Persuasion').disabled=true;
+					document.getElementById('Lies').disabled=true;
+					document.getElementById('Intimidation').disabled=true;
+				}
+			}
+		}
+		function enable(i){ // enable all checkboxes after reset 
+			for (var i=0; i<document.getElementsByName('attribute').length; i++){
+				if (document.getElementsByName('attribute')[i].disabled=true){
+					document.getElementsByName('attribute')[i].disabled=false;
+				}
+			}
+			for (var i=0; i<document.getElementsByName('skill').length; i++){
+				if (document.getElementsByName('skill')[i].disabled=true){
+					document.getElementsByName('skill')[i].disabled=false;
+				}
+			}
+		}
+		function done(){ // enable submit button when 11 points are assigned 
+		var count = 0;
+		document.getElementById('finish').disabled = true;
+			for (i=0; i<document.getElementsByTagName('input').length; i++){
+				if (document.getElementsByTagName('input')[i].checked == true){
+					count = count + 1;
+				}
+			}
+			if (count > 10) {
+				document.getElementById('finish').disabled = false;
+			}
+		}
+		function play(){ // sound of buttons
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+			var create = document.getElementById('character');
+			setTimeout( function(){character.submit();}, 300);
+		}
+		function play2(){
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+		}
+	</script>
+	<script src="scripts/mute.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		myVar = setTimeout(function(){window.location.href='character sheet.html#openModalDelay'}, 300000);
+			$(document).ready(function(){
+			$(document).mousemove(function(event){
+			clearTimeout(myVar);
+		myVar = setTimeout(function(){window.location.href='character sheet.html#openModalDelay'}, 300000);
+			});
+		}); 
+	</script>
+</head>
+<body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->> 
+	<audio id="clickme" hidden = "hidden" preload>
+		<source src = "sounds/click.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/click.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<a class="links"  type="button" onclick="location.href='#openModal'"><img src="images/help.png" class="imagehelp"/></a>
+			<div id="openModal" class="modalDialog">
+				<div>
+					<a onclick="location.href='#close'" title="" class="close">x</a>
+					<p>
+					<center><strong>Attributes and Skills Explanation</strong></center><br/><br/>
+					<strong>Physical attribute:</strong> The strength of your character used by the Running, Pistol, Stealth and Lockpicking skills.<br/>
+					<strong>Mental attribute:</strong> The intelligence of your character used by the Investigation skill.<br/>
+					<strong>Social attribute:</strong> The ability of your character to use the skills of Persuasion, Lies and Intimidation.<br/><br/>
+					<strong>Lockpicking skill:</strong> How good are you at breaking into houses?<br/>
+					<strong>Running skill:</strong> The ability to run fast.<br/>
+					<strong>Persuasion skill:</strong> How effective is your character to affect others with words.<br/>
+					<strong>Stealth skill:</strong> The ability to keep a low profile.<br/>
+					<strong>Investigation skill:</strong> The ability to take a better a look / examine a scene.<br/>
+					<strong>Lies skill:</strong> Are you convincing enough?<br/>
+					<strong>Pistol skill:</strong> More accuracy!<br/>
+					<strong>Second Language skill:</strong> You either know another language or not. Simple as that.<br/>
+					<strong>Intimidation skill:</strong> Verbal or physical abuse to achieve your goals.
+					</p>
+				</div>
+			</div>
+	<h1>
+		CHARACTER SHEET
+	</h1>
+	<h2>ATTRIBUTES</h2>
+	<h4> You must use 7 attributes points!</h4>
+	<p>
+	<form name="character" id="character" method="post" onsubmit="play()" action="prologue.html">
+		<table align="center">
+		<tr> <!-- creation of attribute table -->
+		<td>Physical</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Physical1" onclick="(function(){check(); limitat(); done();})();"/>
+			<label for="Physical1"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Physical2" disabled="disabled" onclick="(function(){check(); limitat(); done();})();"/>
+			<label for="Physical2"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Physical3" disabled="disabled" onclick="(function(){check(); limitat(); done();})();"/>
+			<label for="Physical3"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Physical4" disabled="disabled" onclick="(function(){check(); limitat(); done();})();"/>
+			<label for="Physical4"></label>
+			</div>
+		</td>
+		</tr>
+		<tr>
+		<td>Mental</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Mental1" onclick="(function(){check2(); limitat(); done();})();"/>
+			<label for="Mental1"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Mental2" disabled="disabled" onclick="(function(){check2(); limitat(); done();})();"/>
+			<label for="Mental2"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Mental3" disabled="disabled" onclick="(function(){check2(); limitat(); done();})();"/>
+			<label for="Mental3"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Mental4" disabled="disabled" onclick="(function(){check2(); limitat(); done();})();"/>
+			<label for="Mental4"></label>
+			</div>
+		</td>
+		</tr>
+		<tr>
+		<td>Social</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Social1" onclick="(function(){check3(); limitat(); done();})();"/>
+			<label for="Social1"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Social2" disabled="disabled" onclick="(function(){check3(); limitat(); done();})();"/>
+			<label for="Social2"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Social3" disabled="disabled" onclick="(function(){check3(); limitat(); done();})();"/>
+			<label for="Social3"></label>
+			</div>
+		</td>
+		<td>
+			<div class="circle">
+			<input name="attribute" type="checkbox" value="" id="Social4" disabled="disabled" onclick="(function(){check3(); limitat(); done();})();"/>
+			<label for="Social4"></label>
+			</div>
+		</tr>
+		</table>
+	</p>
+	<h2>SKILLS</h2>
+	<h4>You must use 4 skill points!</h4>
+	<p>
+		<table align="center">
+		<tr> <!-- creation of skills table -->
+		<td>Lockpicking</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox"  value="" id="Lockpicking" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Lockpicking"></label>
+			</div>
+		</td>
+		<td>Stealth</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Stealth" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Stealth"></label>
+			</div>
+		</td>
+		<td>Pistol</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Pistol" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Pistol"></label>
+			</div>
+		</td>
+		</tr>
+		<tr>
+		<td>Running</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Running" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Running"></label>
+			</div>
+		</td>
+		<td>Investigation</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Investigation" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Investigation"></label>
+			</div>
+		</td>
+		<td>Second Language</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Second Language" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Second Language"></label>
+			</div>
+		</td>
+		</tr>
+		<tr>
+		<td>Persuasion</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Persuasion" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Persuasion"></label>
+			</div>
+		</td>
+		<td>Lies</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Lies" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Lies"></label>
+			</div>
+		</td>
+		<td>Intimidation</td>
+		<td>
+			<div class="circle">
+			<input name="skill" type="checkbox" value="" id="Intimidation" onclick="(function() {limitsk(); done();})();"/>
+			<label for="Intimidation"></label>
+			</div>
+		</td>
+		</tr>
+		</table>
+	</p>
+	<h4>You have to assign all points in order to continue!</h4>
+	<table align="center">
+		<tr>
+		<td>
+			<input id="Reset" type="reset" class="linkbutton" onclick="enable(); play2()" value="&nbsp;&nbsp;Reset&nbsp;&nbsp;"/>
+		</td>
+		<td>
+			<input id="finish" type="button" class="linkbutton" disabled="disabled" onclick="(function(){ play(); phys(); menta(); soc(); lock(); stlth(); pist(); run(); invest(); secl(); pers(); lie(); intim();})();" value="&nbsp;&nbsp;Finish&nbsp;&nbsp;"/>
+		</td>
+		</tr>
+	</table>
+	</form>
+	<div id="openModalDelay" class="modalDialog">
+		<div>
+			<a onclick="location.href='#closeDelay'" title="" class="close">x</a>
+			<p>
+				<center>
+				The clock is ticking. Hurry up!
+				</center>
+			</p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="platforms\android\platform_www\cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+</html>
